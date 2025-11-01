@@ -16,20 +16,18 @@
     --row-light: #f9f9f9;
     --row-dark: #ffffff;
   }
-  body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; background-color: var(--bg-light); color: var(--text-dark);}
-  
-  header { background-color: var(--brand-purple); color: white; padding: 20px; text-align: center; position: sticky; top:0; z-index: 100;}
-  header img { height: 60px; display:block; margin: 0 auto 10px auto;}
-  header h1 { color: var(--brand-yellow); font-size:1.8rem; margin:0;}
 
-  /* Buttons fixed at top */
+  body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; background-color: var(--bg-light); color: var(--text-dark);}
+
+  /* Buttons at the very top */
   .button-container {
     position: sticky;
-    top: 100px; /* header height */
+    top: 0;
+    width: 100%;
     background: var(--bg-light);
     padding: 10px 0;
     text-align: center;
-    z-index: 99;
+    z-index: 999;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
   .button-container button {
@@ -45,11 +43,23 @@
   }
   .button-container button:hover { background-color: #442060; }
 
+  header {
+    background-color: var(--brand-purple);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    top: 50px; /* height of button bar */
+    z-index: 100;
+  }
+  header img { height: 60px; display:block; margin: 0 auto 10px auto; }
+  header h1 { color: var(--brand-yellow); font-size:1.8rem; margin:0; }
+
   section { margin:25px auto; width:90%; max-width:1000px; background:white; border-radius:10px; padding:20px; box-shadow:0 1px 6px rgba(0,0,0,0.08); text-align:center;}
   h2 { margin-bottom:12px; color: var(--brand-purple); font-size:1.5rem;}
-  
+
   #searchInput { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box;}
-  
+
   .table-container { overflow-x:auto; max-height:450px; border:1px solid #ccc; border-radius:8px;}
   table { width:100%; border-collapse:collapse; min-width:600px;}
   th, td { padding:10px 14px; border-bottom:1px solid #ddd; text-align:left; font-size:0.95rem;}
@@ -58,15 +68,13 @@
   tbody tr:nth-child(odd) { background-color: var(--row-dark);}
   tbody tr:hover { background-color: #e0e0f0;}
 
-  /* Members Signed Up hidden by default */
-  #volunteerTable td.membersCol,
-  #volunteerTable th.membersCol {
+  /* Members Signed Up: header visible, content hidden until hover */
+  #volunteerTable td.membersCol {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s;
   }
-  #volunteerTable tr:hover td.membersCol,
-  #volunteerTable tr:hover th.membersCol {
+  #volunteerTable tr:hover td.membersCol {
     visibility: visible;
     opacity: 1;
   }
@@ -80,22 +88,34 @@
     #searchInput{padding:8px;font-size:0.9rem;}
     .button-container button { padding:8px 12px; font-size:0.9rem; }
   }
+
+  /* Notifications alerts styling */
+  #notificationsContent p {
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: white;
+  }
+  .alert-important { background-color: #d9534f; }
+  .alert-info { background-color: #0275d8; }
+  .alert-tip { background-color: #f0ad4e; color: #202040; }
 </style>
 </head>
 <body>
+
+<!-- Buttons at very top -->
+<div class="button-container">
+  <button onclick="scrollToSection('volunteerSection')">Table View</button>
+  <button onclick="scrollToSection('calendarSection')">Calendar View</button>
+  <button onclick="location.href='mailto:Volunteer@Airdrie1st.com'">Contact</button>
+  <button onclick="window.location.href='donation-center.html'">Donation Center Info</button>
+</div>
 
 <header>
   <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
   <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
 </header>
-
-<!-- Buttons -->
-<div class="button-container">
-  <button onclick="scrollToSection('volunteerSection')">Table View</button>
-  <button onclick="scrollToSection('calendarSection')">Calendar View</button>
-  <button onclick="location.href='mailto:Volunteer@Airdrie1st.com'">Contact</button>
-  <button onclick="scrollToSection('donationSection')">Donation Center Info</button>
-</div>
 
 <!-- Notifications Section -->
 <section id="notificationsSection">
@@ -121,12 +141,6 @@
 <section id="calendarSection">
   <h2>Calendar View</h2>
   <iframe src="https://calendar.google.com/calendar/embed?src=volunteer%40airdrie1st.com&ctz=America%2FEdmonton" style="border:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
-</section>
-
-<!-- Donation Section -->
-<section id="donationSection">
-  <h2>Donation Center Info</h2>
-  <p>Here you can add your donation center details, links, and instructions.</p>
 </section>
 
 <footer>
@@ -160,7 +174,6 @@ Papa.parse(csvUrl, {
       if(key!==hiddenCol){
         const th = document.createElement('th');
         th.textContent = key;
-        // Add class if Members Signed Up column
         if(lowerKey.includes("members signed up")) th.classList.add("membersCol");
         tableHeader.appendChild(th);
       }
@@ -180,7 +193,6 @@ Papa.parse(csvUrl, {
         } else {
           td.textContent=row[key];
         }
-        // Add class if Members Signed Up
         if(key.toLowerCase().includes("members signed up")) td.classList.add("membersCol");
         tr.appendChild(td);
       });
@@ -214,7 +226,11 @@ Papa.parse(notificationsCsvUrl, {
     container.innerHTML='';
     data.forEach(row=>{
       const p=document.createElement('p');
-      p.textContent=row['Message']; // Column name "Message"
+      p.textContent=row['Message'];
+      const type = (row['Type'] || '').toLowerCase().trim();
+      if(type==='important') p.classList.add('alert-important');
+      else if(type==='info') p.classList.add('alert-info');
+      else if(type==='tip') p.classList.add('alert-tip');
       container.appendChild(p);
     });
   }
@@ -223,4 +239,3 @@ Papa.parse(notificationsCsvUrl, {
 
 </body>
 </html>
-
