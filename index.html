@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Volunteer Hub</title>
+
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
@@ -15,26 +16,22 @@
     --row-light: #f9f9f9;
     --row-dark: #ffffff;
   }
+  body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; background-color: var(--bg-light); color: var(--text-dark);}
+  
+  header { background-color: var(--brand-purple); color: white; padding: 15px 10px; text-align: center; }
+  header img { height: 50px; vertical-align: middle; display:inline-block; margin-right:10px; }
+  header h1 { color: var(--brand-yellow); font-size:1.5rem; display:inline-block; vertical-align: middle; margin:0;}
 
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-  }
-
-  /* Sticky Buttons at the very top */
+  /* Buttons fixed at top */
   .button-container {
     position: sticky;
-    top: 0;
+    top:0;
     background: var(--bg-light);
     padding: 10px 0;
     text-align: center;
-    z-index: 1000;
+    z-index: 99;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
-
   .button-container button {
     background-color: var(--brand-purple);
     color: var(--brand-yellow);
@@ -46,138 +43,31 @@
     cursor: pointer;
     transition: background 0.3s;
   }
+  .button-container button:hover { background-color: #442060; }
 
-  .button-container button:hover {
-    background-color: #442060;
-  }
+  section { margin:25px auto; width:90%; max-width:1000px; background:white; border-radius:10px; padding:20px; box-shadow:0 1px 6px rgba(0,0,0,0.08); text-align:center;}
+  h2 { margin-bottom:12px; color: var(--brand-purple); font-size:1.5rem;}
+  
+  #searchInput { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box;}
+  
+  .table-container { overflow-x:auto; max-height:450px; border:1px solid #ccc; border-radius:8px;}
+  table { width:100%; border-collapse:collapse; min-width:600px;}
+  th, td { padding:10px 14px; border-bottom:1px solid #ddd; text-align:left; font-size:0.95rem;}
+  th { position:sticky; top:0; background: var(--brand-purple); color: var(--brand-yellow); font-size:1rem;}
+  tbody tr:nth-child(even) { background-color: var(--row-light);}
+  tbody tr:nth-child(odd) { background-color: var(--row-dark);}
+  tbody tr:hover { background-color: #e0e0f0;}
 
-  /* Header (logo + title) scrolls normally */
-  header {
-    background-color: var(--brand-purple);
-    color: white;
-    padding: 15px 10px;
-    text-align: center;
-  }
+  /* Collapsible notifications */
+  .collapsible { cursor: pointer; font-weight: bold; margin-bottom: 10px; }
+  .content { display:none; text-align:left; }
 
-  header .header-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-  }
-
-  header img {
-    height: 45px;
-  }
-
-  header h1 {
-    color: var(--brand-yellow);
-    font-size: 1.6rem;
-    margin: 0;
-  }
-
-  section {
-    margin: 25px auto;
-    width: 90%;
-    max-width: 1000px;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-    text-align: center;
-  }
-
-  h2 {
-    margin-bottom: 12px;
-    color: var(--brand-purple);
-    font-size: 1.5rem;
-  }
-
-  #searchInput {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    box-sizing: border-box;
-  }
-
-  .table-container {
-    overflow-x: auto;
-    max-height: 450px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
-  }
-
-  th, td {
-    padding: 10px 14px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-    font-size: 0.95rem;
-  }
-
-  th {
-    position: sticky;
-    top: 0;
-    background: var(--brand-purple);
-    color: var(--brand-yellow);
-    font-size: 1rem;
-  }
-
-  tbody tr:nth-child(even) { background-color: var(--row-light); }
-  tbody tr:nth-child(odd) { background-color: var(--row-dark); }
-  tbody tr:hover { background-color: #e0e0f0; }
-
-  footer {
-    margin-top: 35px;
-    padding: 20px 10px;
-    background: var(--brand-purple);
-    color: white;
-    font-size: 0.9rem;
-    text-align: center;
-  }
-
-  footer a {
-    color: var(--brand-yellow);
-    text-decoration: none;
-  }
-
-  /* Collapsible notifications for mobile */
-  .collapsible {
-    background-color: var(--brand-purple);
-    color: white;
-    cursor: pointer;
-    padding: 12px;
-    width: 100%;
-    border: none;
-    text-align: center;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-
-  .active, .collapsible:hover {
-    background-color: #442060;
-  }
-
-  .content {
-    padding: 0 18px;
-    display: none;
-    overflow: hidden;
-    margin-top: 10px;
-  }
+  footer { margin-top:35px; padding:20px 10px; background: var(--brand-purple); color:white; font-size:0.9rem; text-align:center;}
+  footer a { color: var(--brand-yellow); text-decoration:none;}
 
   @media (max-width:600px){
-    header h1 { font-size: 1.2rem; }
-    header img { height: 35px; }
-    th,td{padding:6px 8px;font-size:0.85rem;}
+    h2{font-size:1.2rem;} 
+    th,td{padding:6px 8px;font-size:0.85rem;} 
     #searchInput{padding:8px;font-size:0.9rem;}
     .button-container button { padding:8px 12px; font-size:0.9rem; }
   }
@@ -185,26 +75,22 @@
 </head>
 <body>
 
-<!-- Sticky Buttons -->
+<header>
+  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
+  <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
+</header>
+
+<!-- Buttons -->
 <div class="button-container">
   <button onclick="scrollToSection('volunteerSection')">Table View</button>
   <button onclick="scrollToSection('calendarSection')">Calendar View</button>
   <button onclick="location.href='mailto:Volunteer@Airdrie1st.com'">Contact</button>
-  <button onclick="window.location.href='donation.html'">Donation Center Info</button>
+  <button onclick="scrollToSection('donationSection')">Donation Center Info</button>
 </div>
-
-<!-- Header (scrolls normally) -->
-<header>
-  <div class="header-content">
-    <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
-    <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
-  </div>
-</header>
 
 <!-- Notifications Section -->
 <section id="notificationsSection">
-  <h2>Notifications & How-to</h2>
-  <button class="collapsible">Show/Hide Notifications</button>
+  <h2 class="collapsible">Notifications & How-to</h2>
   <div class="content" id="notificationsContent">
     Loading notifications...
   </div>
@@ -225,8 +111,13 @@
 <!-- Calendar Section -->
 <section id="calendarSection">
   <h2>Calendar View</h2>
-  <p style="color:#666;">If you see a permission error, please ensure the calendar is shared publicly in Google Calendar settings.</p>
   <iframe src="https://calendar.google.com/calendar/embed?src=volunteer%40airdrie1st.com&ctz=America%2FEdmonton" style="border:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+</section>
+
+<!-- Donation Section -->
+<section id="donationSection">
+  <!-- Content will go on separate page, header removed -->
+  <p>Here you can add your donation center details, links, and instructions.</p>
 </section>
 
 <footer>
@@ -238,9 +129,9 @@
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + new Date().getTime();
 
 Papa.parse(csvUrl, {
-  download: true,
-  header: true,
-  skipEmptyLines: true,
+  download:true,
+  header:true,
+  skipEmptyLines:true,
   complete: function(results){
     const data = results.data;
     const tableBody = document.getElementById('tableBody');
@@ -257,10 +148,11 @@ Papa.parse(csvUrl, {
       const lowerKey = key.toLowerCase().trim();
       if(lowerKey==='sign up') signupCol = key;
       if(lowerKey==='hidden') hiddenCol = key;
+
       if(key!==hiddenCol){
-        const th=document.createElement('th');
-        th.textContent=key;
-        tableHeader.appendChild(th);
+        const th = document.createElement('th');
+        th.textContent = key;
+        tableHeader.appendChild(th); // all columns visible
       }
     });
 
@@ -307,7 +199,7 @@ coll.addEventListener("click", function() {
 });
 
 // --- Notifications CSV ---
-const notificationsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv';
+const notificationsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv';
 Papa.parse(notificationsCsvUrl, {
   download: true,
   header: true,
@@ -318,7 +210,7 @@ Papa.parse(notificationsCsvUrl, {
     container.innerHTML='';
     data.forEach(row=>{
       const p=document.createElement('p');
-      p.textContent=row['Message']; // Column name "Message"
+      p.textContent=row['Message']; // Column name in your sheet
       container.appendChild(p);
     });
   }
@@ -327,4 +219,3 @@ Papa.parse(notificationsCsvUrl, {
 
 </body>
 </html>
-
