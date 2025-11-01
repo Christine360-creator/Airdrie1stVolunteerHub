@@ -193,4 +193,34 @@ Papa.parse(csvUrl, {
 document.getElementById('searchInput').addEventListener('input', function(){
   const filter=this.value.toLowerCase();
   document.querySelectorAll('#tableBody tr').forEach(tr=>{
-    tr.style.display=tr.textContent.toLowerCase().includes(filter
+    tr.style.display=tr.textContent.toLowerCase().includes(filter)?'':'none';
+  });
+});
+
+// --- Smooth scroll to sections ---
+function scrollToSection(sectionId){
+  document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
+// --- Notifications ---
+const notificationsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv';
+Papa.parse(notificationsCsvUrl, {
+  download:true,
+  header:true,
+  skipEmptyLines:true,
+  complete: function(results){
+    const data = results.data;
+    const container = document.getElementById('notificationsContent');
+    container.innerHTML='';
+    data.forEach(row=>{
+      const p=document.createElement('p');
+      p.textContent=row['Message']; // Column name "Message"
+      container.appendChild(p);
+    });
+  }
+});
+</script>
+
+</body>
+</html>
+
