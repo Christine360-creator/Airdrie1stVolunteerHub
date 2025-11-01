@@ -24,7 +24,7 @@
     color: var(--text-dark);
   }
 
-  /* Sticky Buttons FIRST so they stay at very top */
+  /* Sticky Buttons at the very top */
   .button-container {
     position: sticky;
     top: 0;
@@ -51,7 +51,7 @@
     background-color: #442060;
   }
 
-  /* Header comes AFTER so it scrolls away */
+  /* Header (logo + title) scrolls normally */
   header {
     background-color: var(--brand-purple);
     color: white;
@@ -136,18 +136,21 @@
   tbody tr:nth-child(odd) { background-color: var(--row-dark); }
   tbody tr:hover { background-color: #e0e0f0; }
 
-  /* Members Signed Up column fades until hover */
-  #volunteerTable th.membersCol,
-  #volunteerTable td.membersCol {
-    opacity: 0.2;
-    transition: opacity 0.3s;
-  }
-  #volunteerTable:hover th.membersCol,
-  #volunteerTable:hover td.membersCol {
-    opacity: 1;
+  footer {
+    margin-top: 35px;
+    padding: 20px 10px;
+    background: var(--brand-purple);
+    color: white;
+    font-size: 0.9rem;
+    text-align: center;
   }
 
-  /* Collapsible notifications */
+  footer a {
+    color: var(--brand-yellow);
+    text-decoration: none;
+  }
+
+  /* Collapsible notifications for mobile */
   .collapsible {
     background-color: var(--brand-purple);
     color: white;
@@ -171,20 +174,6 @@
     margin-top: 10px;
   }
 
-  footer {
-    margin-top: 35px;
-    padding: 20px 10px;
-    background: var(--brand-purple);
-    color: white;
-    font-size: 0.9rem;
-    text-align: center;
-  }
-
-  footer a {
-    color: var(--brand-yellow);
-    text-decoration: none;
-  }
-
   @media (max-width:600px){
     header h1 { font-size: 1.2rem; }
     header img { height: 35px; }
@@ -204,7 +193,7 @@
   <button onclick="window.location.href='donation.html'">Donation Center Info</button>
 </div>
 
-<!-- Header (scrolls normally now) -->
+<!-- Header (scrolls normally) -->
 <header>
   <div class="header-content">
     <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
@@ -271,7 +260,6 @@ Papa.parse(csvUrl, {
       if(key!==hiddenCol){
         const th=document.createElement('th');
         th.textContent=key;
-        if(lowerKey.includes("members signed up")) th.classList.add("membersCol");
         tableHeader.appendChild(th);
       }
     });
@@ -290,7 +278,6 @@ Papa.parse(csvUrl, {
         } else {
           td.textContent=row[key];
         }
-        if(key.toLowerCase().includes("members signed up")) td.classList.add("membersCol");
         tr.appendChild(td);
       });
       tableBody.appendChild(tr);
@@ -312,19 +299,19 @@ function scrollToSection(sectionId){
 }
 
 // --- Collapsible Notifications ---
-const coll = document.getElementsByClassName("collapsible")[0];
+const coll = document.querySelector(".collapsible");
 coll.addEventListener("click", function() {
   this.classList.toggle("active");
   const content = this.nextElementSibling;
-  content.style.display = content.style.display === "block" ? "none" : "block";
+  content.style.display = (content.style.display === "block") ? "none" : "block";
 });
 
 // --- Notifications CSV ---
 const notificationsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv';
 Papa.parse(notificationsCsvUrl, {
-  download:true,
-  header:true,
-  skipEmptyLines:true,
+  download: true,
+  header: true,
+  skipEmptyLines: true,
   complete: function(results){
     const data = results.data;
     const container = document.getElementById('notificationsContent');
@@ -340,3 +327,4 @@ Papa.parse(notificationsCsvUrl, {
 
 </body>
 </html>
+
