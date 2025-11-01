@@ -24,7 +24,34 @@
     color: var(--text-dark);
   }
 
-  /* Header */
+  /* Sticky Buttons FIRST so they stay at very top */
+  .button-container {
+    position: sticky;
+    top: 0;
+    background: var(--bg-light);
+    padding: 10px 0;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .button-container button {
+    background-color: var(--brand-purple);
+    color: var(--brand-yellow);
+    border: none;
+    padding: 10px 18px;
+    margin: 5px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .button-container button:hover {
+    background-color: #442060;
+  }
+
+  /* Header comes AFTER so it scrolls away */
   header {
     background-color: var(--brand-purple);
     color: white;
@@ -48,33 +75,6 @@
     color: var(--brand-yellow);
     font-size: 1.6rem;
     margin: 0;
-  }
-
-  /* Sticky Buttons */
-  .button-container {
-    position: sticky;
-    top: 0;
-    background: var(--bg-light);
-    padding: 10px 0;
-    text-align: center;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-
-  .button-container button {
-    background-color: var(--brand-purple);
-    color: var(--brand-yellow);
-    border: none;
-    padding: 10px 18px;
-    margin: 5px;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-
-  .button-container button:hover {
-    background-color: #442060;
   }
 
   section {
@@ -136,7 +136,7 @@
   tbody tr:nth-child(odd) { background-color: var(--row-dark); }
   tbody tr:hover { background-color: #e0e0f0; }
 
-  /* Hide Members Signed Up column until hover */
+  /* Members Signed Up column fades until hover */
   #volunteerTable th.membersCol,
   #volunteerTable td.membersCol {
     opacity: 0.2;
@@ -147,7 +147,7 @@
     opacity: 1;
   }
 
-  /* Collapsible notifications (mobile) */
+  /* Collapsible notifications */
   .collapsible {
     background-color: var(--brand-purple);
     color: white;
@@ -204,7 +204,7 @@
   <button onclick="window.location.href='donation.html'">Donation Center Info</button>
 </div>
 
-<!-- Header -->
+<!-- Header (scrolls normally now) -->
 <header>
   <div class="header-content">
     <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
