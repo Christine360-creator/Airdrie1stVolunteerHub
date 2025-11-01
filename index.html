@@ -17,14 +17,20 @@
     --row-dark: #ffffff;
   }
   body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; background-color: var(--bg-light); color: var(--text-dark);}
+  
   header { background-color: var(--brand-purple); color: white; padding: 20px; text-align: center; position: sticky; top:0; z-index: 100;}
   header img { height: 60px; display:block; margin: 0 auto 10px auto;}
   header h1 { color: var(--brand-yellow); font-size:1.8rem; margin:0;}
 
-  /* Buttons */
+  /* Buttons fixed at top */
   .button-container {
-    margin: 15px auto;
+    position: sticky;
+    top: 100px; /* header height */
+    background: var(--bg-light);
+    padding: 10px 0;
     text-align: center;
+    z-index: 99;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
   .button-container button {
     background-color: var(--brand-purple);
@@ -41,7 +47,9 @@
 
   section { margin:25px auto; width:90%; max-width:1000px; background:white; border-radius:10px; padding:20px; box-shadow:0 1px 6px rgba(0,0,0,0.08); text-align:center;}
   h2 { margin-bottom:12px; color: var(--brand-purple); font-size:1.5rem;}
+  
   #searchInput { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box;}
+  
   .table-container { overflow-x:auto; max-height:450px; border:1px solid #ccc; border-radius:8px;}
   table { width:100%; border-collapse:collapse; min-width:600px;}
   th, td { padding:10px 14px; border-bottom:1px solid #ddd; text-align:left; font-size:0.95rem;}
@@ -49,8 +57,23 @@
   tbody tr:nth-child(even) { background-color: var(--row-light);}
   tbody tr:nth-child(odd) { background-color: var(--row-dark);}
   tbody tr:hover { background-color: #e0e0f0;}
+
+  /* Members Signed Up hidden by default */
+  #volunteerTable td.membersCol,
+  #volunteerTable th.membersCol {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  #volunteerTable tr:hover td.membersCol,
+  #volunteerTable tr:hover th.membersCol {
+    visibility: visible;
+    opacity: 1;
+  }
+
   footer { margin-top:35px; padding:20px 10px; background: var(--brand-purple); color:white; font-size:0.9rem; text-align:center;}
   footer a { color: var(--brand-yellow); text-decoration:none;}
+
   @media (max-width:600px){
     h2{font-size:1.2rem;} 
     th,td{padding:6px 8px;font-size:0.85rem;} 
@@ -68,10 +91,19 @@
 
 <!-- Buttons -->
 <div class="button-container">
-  <button onclick="scrollToSection('volunteerSection')">Sign-Up Table</button>
+  <button onclick="scrollToSection('volunteerSection')">Table View</button>
   <button onclick="scrollToSection('calendarSection')">Calendar View</button>
-  <button onclick="location.href='mailto:Volunteer@Airdrie1st.com'">Need Help</button>
+  <button onclick="location.href='mailto:Volunteer@Airdrie1st.com'">Contact</button>
+  <button onclick="scrollToSection('donationSection')">Donation Center Info</button>
 </div>
+
+<!-- Notifications Section -->
+<section id="notificationsSection">
+  <h2>Notifications & How-to</h2>
+  <div id="notificationsContent">
+    Loading notifications...
+  </div>
+</section>
 
 <!-- Volunteer Table Section -->
 <section id="volunteerSection">
@@ -91,11 +123,18 @@
   <iframe src="https://calendar.google.com/calendar/embed?src=volunteer%40airdrie1st.com&ctz=America%2FEdmonton" style="border:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
 </section>
 
+<!-- Donation Section -->
+<section id="donationSection">
+  <h2>Donation Center Info</h2>
+  <p>Here you can add your donation center details, links, and instructions.</p>
+</section>
+
 <footer>
   Contact us: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</a>
 </footer>
 
 <script>
+// --- Volunteer Table ---
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + new Date().getTime();
 
 Papa.parse(csvUrl, {
@@ -121,6 +160,8 @@ Papa.parse(csvUrl, {
       if(key!==hiddenCol){
         const th = document.createElement('th');
         th.textContent = key;
+        // Add class if Members Signed Up column
+        if(lowerKey.includes("members signed up")) th.classList.add("membersCol");
         tableHeader.appendChild(th);
       }
     });
@@ -139,6 +180,8 @@ Papa.parse(csvUrl, {
         } else {
           td.textContent=row[key];
         }
+        // Add class if Members Signed Up
+        if(key.toLowerCase().includes("members signed up")) td.classList.add("membersCol");
         tr.appendChild(td);
       });
       tableBody.appendChild(tr);
@@ -146,19 +189,8 @@ Papa.parse(csvUrl, {
   }
 });
 
-// Search filter
+// --- Search filter ---
 document.getElementById('searchInput').addEventListener('input', function(){
   const filter=this.value.toLowerCase();
   document.querySelectorAll('#tableBody tr').forEach(tr=>{
-    tr.style.display=tr.textContent.toLowerCase().includes(filter)?'':'none';
-  });
-});
-
-// Smooth scroll to sections
-function scrollToSection(sectionId){
-  document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-}
-</script>
-
-</body>
-</html>
+    tr.style.display=tr.textContent.toLowerCase().includes(filter
