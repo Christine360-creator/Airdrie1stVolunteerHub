@@ -16,16 +16,18 @@
     --row-light: #f9f9f9;
     --row-dark: #ffffff;
   }
+
   body { font-family: 'Segoe UI', sans-serif; margin:0; padding:0; background-color: var(--bg-light); color: var(--text-dark);}
-  
-  header { background-color: var(--brand-purple); color: white; padding: 15px 10px; text-align: center; }
-  header img { height: 50px; vertical-align: middle; display:inline-block; margin-right:10px; }
-  header h1 { color: var(--brand-yellow); font-size:1.5rem; display:inline-block; vertical-align: middle; margin:0;}
+
+  /* Header with smaller logo next to title */
+  header { background-color: var(--brand-purple); color: white; padding: 10px 15px; text-align: center; display: flex; justify-content: center; align-items: center; flex-wrap: wrap;}
+  header img { height: 45px; margin-right: 10px; }
+  header h1 { color: var(--brand-yellow); font-size: 1.4rem; margin: 0; }
 
   /* Buttons fixed at top */
   .button-container {
     position: sticky;
-    top:0;
+    top: 0;
     background: var(--bg-light);
     padding: 10px 0;
     text-align: center;
@@ -116,7 +118,6 @@
 
 <!-- Donation Section -->
 <section id="donationSection">
-  <!-- Content will go on separate page, header removed -->
   <p>Here you can add your donation center details, links, and instructions.</p>
 </section>
 
