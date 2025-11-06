@@ -61,6 +61,17 @@
   .collapsible { cursor: pointer; font-weight: bold; margin-bottom: 10px; }
   .content { display:none; text-align:left; }
 
+  #readAloudBtn {
+    background-color: var(--brand-purple);
+    color: var(--brand-yellow);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  #readAloudBtn:hover { background-color: #442060; }
+
   footer { margin-top:35px; padding:20px 10px; background: var(--brand-purple); color:white; font-size:0.9rem; text-align:center;}
   footer a { color: var(--brand-yellow); text-decoration:none;}
 
@@ -82,12 +93,12 @@
 <div class="button-container">
   <button onclick="scrollToSection('volunteerSection')">Table View</button>
   <button onclick="scrollToSection('calendarSection')">Calendar View</button>
-  <button onclick="location.href='mailto:Volunteer@Airdrie1st.com'">Contact</button>
-  <button onclick="location.href='donation.html'">Donation Center Info</button>
+  <button onclick="scrollToSection('donationSection')">Donation Center Info</button>
 </div>
 
 <section id="notificationsSection">
   <h2 class="collapsible">Notifications & How-to</h2>
+  <button id="readAloudBtn">🔊 Read Aloud</button>
   <div class="content" id="notificationsContent">
     <p>Loading notifications...</p>
   </div>
@@ -106,16 +117,6 @@
 
 <section id="calendarSection">
   <h2>Calendar View</h2>
-
-  <!-- 
-    📘 HOW TO UPDATE THE CALENDAR:
-    1. Go to Google Calendar > Settings and sharing > "Integrate calendar".
-    2. Copy the "Embed code" (starts with <iframe ...>).
-    3. Replace the iframe below with your new embed code.
-    4. Adjust width/height if needed (width="100%" works for most layouts).
-    5. If calendar shows "Busy" only, ensure the calendar’s sharing is set to "Make available to public".
-  -->
-  
   <iframe 
     src="https://calendar.google.com/calendar/embed?src=6d8c4ff38f75611efb175c6cb8a575bce4d3521b797303078b8b04de29294f38%40group.calendar.google.com&ctz=America%2FEdmonton" 
     style="border:0" 
@@ -124,6 +125,11 @@
     frameborder="0" 
     scrolling="no">
   </iframe>
+</section>
+
+<section id="donationSection">
+  <h2>Donation Center</h2>
+  <p>Donation Center coming soon.</p>
 </section>
 
 <footer>
@@ -200,7 +206,7 @@ function scrollToSection(sectionId){
 const coll = document.querySelector(".collapsible");
 coll.addEventListener("click", function() {
   this.classList.toggle("active");
-  const content = this.nextElementSibling;
+  const content = this.nextElementSibling.nextElementSibling;
   content.style.display = (content.style.display === "block") ? "none" : "block";
 });
 
@@ -220,6 +226,29 @@ Papa.parse(notificationsCsvUrl, {
       container.appendChild(p);
     });
   }
+});
+
+// --- Read Aloud for Notifications ---
+const readBtn = document.getElementById('readAloudBtn');
+readBtn.addEventListener('click', () => {
+  const synth = window.speechSynthesis;
+  if (synth.speaking) {
+    synth.cancel();
+    readBtn.textContent = '🔊 Read Aloud';
+    return;
+  }
+  const content = document.getElementById('notificationsContent').innerText.trim();
+  if (!content) {
+    alert('There are no notifications to read.');
+    return;
+  }
+  const speech = new SpeechSynthesisUtterance(content);
+  speech.lang = 'en-CA';
+  synth.speak(speech);
+  readBtn.textContent = '⏹ Stop Reading';
+  speech.onend = () => {
+    readBtn.textContent = '🔊 Read Aloud';
+  };
 });
 </script>
 
