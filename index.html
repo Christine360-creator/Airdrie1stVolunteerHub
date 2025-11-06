@@ -59,7 +59,7 @@
   tbody tr:hover { background-color: #e0e0f0;}
 
   .collapsible { cursor: pointer; font-weight: bold; margin-bottom: 10px; }
-  .content { display:none; text-align:left; }
+  .content { display:block; text-align:left; }
 
   #readAloudBtn {
     background-color: var(--brand-purple);
@@ -100,6 +100,7 @@
   <h2 class="collapsible">Notifications & How-to</h2>
   <button id="readAloudBtn">🔊 Read Aloud</button>
   <div class="content" id="notificationsContent">
+    <!-- Default welcome message -->
     <p>Welcome, everyone!</p>
     <p>All the volunteer sign-up forms are now in one easy place — no more digging through emails!</p>
     <p>I’ll still send out email reminders and links when new shifts open or spots need to be filled, but you can also come here anytime to sign up.</p>
@@ -215,6 +216,7 @@ coll.addEventListener("click", function() {
 });
 
 // --- Notifications CSV ---
+// Append messages below default welcome text
 const notificationsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv';
 Papa.parse(notificationsCsvUrl, {
   download: true,
@@ -223,7 +225,6 @@ Papa.parse(notificationsCsvUrl, {
   complete: function(results){
     const data = results.data;
     const container = document.getElementById('notificationsContent');
-    container.innerHTML='';
     data.forEach(row=>{
       const p=document.createElement('p');
       p.textContent=row['Message'];
