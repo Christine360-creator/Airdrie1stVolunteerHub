@@ -58,9 +58,6 @@
   tbody tr:nth-child(odd) { background-color: var(--row-dark);}
   tbody tr:hover { background-color: #e0e0f0;}
 
-  .collapsible { cursor: pointer; font-weight: bold; margin-bottom: 10px; }
-  .content { display:block; text-align:left; }
-
   #readAloudBtn {
     background-color: var(--brand-purple);
     color: var(--brand-yellow);
@@ -97,7 +94,7 @@
 </div>
 
 <section id="notificationsSection">
-  <h2 class="collapsible">Notifications & How-to</h2>
+  <h2>Notifications & How-to</h2>
   <button id="readAloudBtn">🔊 Read Aloud</button>
   <div class="content" id="notificationsContent">
     <!-- Default welcome message -->
@@ -207,14 +204,6 @@ function scrollToSection(sectionId){
   document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
 }
 
-// --- Collapsible Notifications ---
-const coll = document.querySelector(".collapsible");
-coll.addEventListener("click", function() {
-  this.classList.toggle("active");
-  const content = this.nextElementSibling.nextElementSibling;
-  content.style.display = (content.style.display === "block") ? "none" : "block";
-});
-
 // --- Notifications CSV ---
 // Append messages below default welcome text
 const notificationsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv';
@@ -259,3 +248,4 @@ readBtn.addEventListener('click', () => {
 
 </body>
 </html>
+
