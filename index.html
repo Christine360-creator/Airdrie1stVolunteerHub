@@ -56,7 +56,7 @@
   section { margin:25px auto; width:90%; max-width:1000px; background:white; border-radius:10px; padding:20px; box-shadow:0 1px 6px rgba(0,0,0,0.08); text-align:center;}
   h2 { margin-bottom:12px; color: var(--brand-purple); font-size:1.5rem;}
   
-  #searchInput { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box;}
+  #searchInput, .donationSearch { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box;}
   
   .table-container { overflow-x:auto; max-height:450px; border:1px solid #ccc; border-radius:8px;}
   table { width:100%; border-collapse:collapse; min-width:600px;}
@@ -83,7 +83,7 @@
   @media (max-width:600px){
     h2{font-size:1.2rem;} 
     th,td{padding:6px 8px;font-size:0.85rem;} 
-    #searchInput{padding:8px;font-size:0.9rem;}
+    #searchInput, .donationSearch{padding:8px;font-size:0.9rem;}
     .button-container button { padding:8px 12px; font-size:0.9rem; }
   }
 </style>
@@ -98,6 +98,7 @@
 <div class="button-container">
   <button onclick="scrollToSection('volunteerSection')">Table View</button>
   <button onclick="scrollToSection('calendarSection')">Calendar View</button>
+  <button onclick="scrollToSection('donationScheduleSection')">Donation Center Schedule</button>
   <button onclick="scrollToSection('donationSection')">Donation Center Info</button>
 </div>
 
@@ -137,6 +138,18 @@
   </iframe>
 </section>
 
+<!-- NEW Donation Center Schedule Section -->
+<section id="donationScheduleSection">
+  <h2>Donation Center Schedule</h2>
+  <input type="text" class="donationSearch" placeholder="Search in table...">
+  <div class="table-container">
+    <table id="donationTable">
+      <thead><tr id="donationHeader"></tr></thead>
+      <tbody id="donationBody"></tbody>
+    </table>
+  </div>
+</section>
+
 <section id="donationSection">
   <h2>Donation Center</h2>
   <p>Donation Center information coming soon.</p>
@@ -148,9 +161,9 @@
 
 <script>
 // --- Volunteer Table ---
-const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + new Date().getTime();
+const volunteerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + new Date().getTime();
 
-Papa.parse(csvUrl, {
+Papa.parse(volunteerCsvUrl, {
   download:true,
   header:true,
   skipEmptyLines:true,
@@ -199,10 +212,52 @@ Papa.parse(csvUrl, {
   }
 });
 
-// --- Search filter ---
+// --- Donation Center Schedule Table ---
+const donationCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTf7dG-oPU5Tom5CtnAhzt9O-qhD3e7pfSrxKq5gsGrIANZmkqui-DXFpnjXXxgSav8xUkQgZa5QRaA/pub?gid=728623681&single=true&output=csv&cachebuster=' + new Date().getTime();
+
+Papa.parse(donationCsvUrl, {
+  download:true,
+  header:true,
+  skipEmptyLines:true,
+  complete: function(results){
+    const data = results.data;
+    const tableBody = document.getElementById('donationBody');
+    const tableHeader = document.getElementById('donationHeader');
+    tableBody.innerHTML='';
+    tableHeader.innerHTML='';
+
+    if(!data || data.length===0) return;
+
+    Object.keys(data[0]).forEach(key=>{
+      const th = document.createElement('th');
+      th.textContent = key;
+      tableHeader.appendChild(th); 
+    });
+
+    data.forEach(row=>{
+      const tr=document.createElement('tr');
+      Object.keys(row).forEach(key=>{
+        const td=document.createElement('td');
+        td.textContent=row[key];
+        tr.appendChild(td);
+      });
+      tableBody.appendChild(tr);
+    });
+  }
+});
+
+// --- Search filter for Volunteer Table ---
 document.getElementById('searchInput').addEventListener('input', function(){
   const filter=this.value.toLowerCase();
   document.querySelectorAll('#tableBody tr').forEach(tr=>{
+    tr.style.display=tr.textContent.toLowerCase().includes(filter)?'':'none';
+  });
+});
+
+// --- Search filter for Donation Schedule Table ---
+document.querySelector('.donationSearch').addEventListener('input', function(){
+  const filter=this.value.toLowerCase();
+  document.querySelectorAll('#donationBody tr').forEach(tr=>{
     tr.style.display=tr.textContent.toLowerCase().includes(filter)?'':'none';
   });
 });
@@ -255,4 +310,3 @@ readBtn.addEventListener('click', () => {
 
 </body>
 </html>
-
