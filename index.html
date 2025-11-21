@@ -86,6 +86,23 @@
     #searchInput, .donationSearch{padding:8px;font-size:0.9rem;}
     .button-container button { padding:8px 12px; font-size:0.9rem; }
   }
+
+  /* Responsive video */
+  .videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>
 </head>
 <body>
@@ -106,7 +123,6 @@
   <h2>Notifications & How-to</h2>
   <button id="readAloudBtn">🔊 Read Aloud</button>
   <div class="content" id="notificationsContent">
-    <!-- Default welcome message -->
     <p>Welcome, everyone!</p>
     <p>All the volunteer sign-up forms are now in one easy place — no more digging through emails!</p>
     <p>I’ll still send out email reminders and links when new shifts open or spots need to be filled, but you can also come here anytime to sign up.</p>
@@ -138,7 +154,6 @@
   </iframe>
 </section>
 
-<!-- NEW Donation Center Schedule Section -->
 <section id="donationScheduleSection">
   <h2>Donation Center Schedule</h2>
   <input type="text" class="donationSearch" placeholder="Search in table...">
@@ -150,9 +165,17 @@
   </div>
 </section>
 
+<!-- UPDATED Donation Center Info Section WITH VIDEO -->
 <section id="donationSection">
-  <h2>Donation Center</h2>
-  <p>Donation Center information coming soon.</p>
+  <h2>Donation Center Training Video</h2>
+
+  <div class="videoWrapper">
+    <iframe 
+      src="https://www.youtube.com/embed/2q87KaB_qDg"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+  </div>
 </section>
 
 <footer>
@@ -246,7 +269,7 @@ Papa.parse(donationCsvUrl, {
   }
 });
 
-// --- Search filter for Volunteer Table ---
+// --- Search for Volunteer Table ---
 document.getElementById('searchInput').addEventListener('input', function(){
   const filter=this.value.toLowerCase();
   document.querySelectorAll('#tableBody tr').forEach(tr=>{
@@ -254,7 +277,7 @@ document.getElementById('searchInput').addEventListener('input', function(){
   });
 });
 
-// --- Search filter for Donation Schedule Table ---
+// --- Search for Donation Table ---
 document.querySelector('.donationSearch').addEventListener('input', function(){
   const filter=this.value.toLowerCase();
   document.querySelectorAll('#donationBody tr').forEach(tr=>{
@@ -284,7 +307,7 @@ Papa.parse(notificationsCsvUrl, {
   }
 });
 
-// --- Read Aloud for Notifications ---
+// --- Read Aloud ---
 const readBtn = document.getElementById('readAloudBtn');
 readBtn.addEventListener('click', () => {
   const synth = window.speechSynthesis;
@@ -310,3 +333,4 @@ readBtn.addEventListener('click', () => {
 
 </body>
 </html>
+
