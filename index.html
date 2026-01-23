@@ -5,11 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Volunteer Hub</title>
 
-<!-- Site Icon / Favicon for all devices -->
 <link rel="icon" type="image/png" href="logod.png?v=2">
 <link rel="apple-touch-icon" href="logod.png?v=2">
 
-<!-- Force iOS to update icon -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
@@ -49,22 +47,17 @@
     font-size: 1rem;
     border-radius: 6px;
     cursor: pointer;
-    transition: background 0.3s;
   }
-  .button-container button:hover { background-color: #442060; }
 
   section { margin:25px auto; width:90%; max-width:1000px; background:white; border-radius:10px; padding:20px; box-shadow:0 1px 6px rgba(0,0,0,0.08); text-align:center;}
   h2 { margin-bottom:12px; color: var(--brand-purple); font-size:1.5rem;}
 
-  #searchInput { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; font-size:1rem; box-sizing:border-box;}
+  #searchInput { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; font-size:1rem; }
 
   .table-container { overflow-x:auto; max-height:450px; border:1px solid #ccc; border-radius:8px;}
   table { width:100%; border-collapse:collapse; min-width:600px;}
-  th, td { padding:10px 14px; border-bottom:1px solid #ddd; text-align:left; font-size:0.95rem;}
-  th { position:sticky; top:0; background: var(--brand-purple); color: var(--brand-yellow); font-size:1rem; z-index:2; }
-  tbody tr:nth-child(even) { background-color: var(--row-light);}
-  tbody tr:nth-child(odd) { background-color: var(--row-dark);}
-  tbody tr:hover { background-color: #e0e0f0;}
+  th, td { padding:10px 14px; border-bottom:1px solid #ddd; text-align:left;}
+  th { position:sticky; top:0; background: var(--brand-purple); color: var(--brand-yellow); }
 
   #readAloudBtn {
     background-color: var(--brand-purple);
@@ -75,24 +68,16 @@
     cursor: pointer;
     margin-bottom: 10px;
   }
-  #readAloudBtn:hover { background-color: #442060; }
 
   footer { margin-top:35px; padding:20px 10px; background: var(--brand-purple); color:white; font-size:0.9rem; text-align:center;}
   footer a { color: var(--brand-yellow); text-decoration:none;}
-
-  @media (max-width:600px){
-    h2{font-size:1.2rem;}
-    th,td{padding:6px 8px;font-size:0.85rem;}
-    #searchInput{padding:8px;font-size:0.9rem;}
-    .button-container button { padding:8px 12px; font-size:0.9rem; }
-  }
 </style>
 </head>
 
 <body>
 
 <header>
-  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
+  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png">
   <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
 </header>
 
@@ -107,6 +92,10 @@
   <button id="readAloudBtn">🔊 Read Aloud</button>
   <div class="content" id="notificationsContent">
     <p>Welcome, everyone!</p>
+    <p>All the volunteer sign-up forms are now in one easy place — no more digging through emails!</p>
+    <p>I’ll still send out email reminders and links when new shifts open or spots need to be filled, but you can also come here anytime to sign up.</p>
+    <p>Just click on an event in the Agenda view or Calendar view to see the details and sign-up form.</p>
+    <p>If you have any trouble or need to make changes, please contact Christine — I’m happy to help!</p>
     <p><strong>Please note:</strong> A new section called <strong>Fundraisers</strong> has been added to this page.</p>
     <p>This is where you’ll find links to our current fundraisers.</p>
   </div>
@@ -116,7 +105,7 @@
   <h2>Volunteer Schedule</h2>
   <input type="text" id="searchInput" placeholder="Search in table...">
   <div class="table-container">
-    <table id="volunteerTable">
+    <table>
       <thead><tr id="tableHeader"></tr></thead>
       <tbody id="tableBody"></tbody>
     </table>
@@ -125,137 +114,40 @@
 
 <section id="calendarSection">
   <h2>Calendar View</h2>
-  <iframe
-    src="https://calendar.google.com/calendar/embed?src=6d8c4ff38f75611efb175c6cb8a575bce4d3521b797303078b8b04de29294f38%40group.calendar.google.com&ctz=America%2FEdmonton"
-    style="border:0"
-    width="100%"
-    height="600"
-    frameborder="0"
-    scrolling="no">
-  </iframe>
+  <iframe src="https://calendar.google.com/calendar/embed?src=6d8c4ff38f75611efb175c6cb8a575bce4d3521b797303078b8b04de29294f38%40group.calendar.google.com&ctz=America%2FEdmonton"
+    width="100%" height="600" frameborder="0"></iframe>
 </section>
 
 <section id="fundraisersSection">
   <h2>Fundraisers</h2>
 
-  <p>
-    This section is a place to store fundraiser links that can be easily
-    copied and shared.
-  </p>
+  <p>This section is a place to store fundraiser links that can be easily copied and shared.</p>
 
   <h3>True Earth</h3>
+  <p>True Earth offers eco-friendly laundry strips and household cleaning products that help reduce plastic waste.</p>
+  <p>When you make a purchase through our link, Airdrie 1st receives 20% of the sale, at no extra cost to the buyer.</p>
   <p>
-    True Earth offers eco-friendly laundry strips and household cleaning
-    products that help reduce plastic waste.
-  </p>
-  <p>
-    When you make a purchase through our link, Airdrie 1st receives
-    <strong>20% of the sale</strong>, at no extra cost to the buyer.
-  </p>
-  <p>
-    <a href="https://ca.tru.earth/collections/fundraising?irclickid=z3z2GpQNnxycTvv2tD28yVrmUkpSvbQZTR8AyU0&irgwc=1&afsrc=1&utm_source=6872328&mp_value1=Airdrie%201st%20Club&timestamp=1769187020709&utm_campaign=impact&im_rewards=1"
-       target="_blank">
+    <a href="https://ca.tru.earth/collections/fundraising?irclickid=z3z2GpQNnxycTvv2tD28yVrmUkpSvbQZTR8AyU0&irgwc=1&afsrc=1&utm_source=6872328&mp_value1=Airdrie%201st%20Club&timestamp=1769187020709&utm_campaign=impact&im_rewards=1" target="_blank">
       👉 True Earth Fundraiser Link
     </a>
   </p>
 
   <h3>Valentines for Seniors</h3>
+  <p>Spreads love across the community by delivering Valentines Day packages to seniors and local residents.</p>
   <p>
-    <a href="https://forms.office.com/pages/responsepage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAO__VejOVtUNUhITzFSMjNOUDZQQVFIUFVGRk9JMjAzSi4u&origin=lprLink&route=shorturl"
-       target="_blank">
+    <a href="https://forms.office.com/r/0WF0F7Z83s?origin=lprLink" target="_blank">
       👉 Valentines for Seniors – Share This Form
     </a>
   </p>
 </section>
 
 <footer>
-  Contact us: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</a>
+  Contact me: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</a>
 </footer>
 
 <script>
-const volunteerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + new Date().getTime();
-
-Papa.parse(volunteerCsvUrl, {
-  download:true,
-  header:true,
-  skipEmptyLines:true,
-  complete: function(results){
-    const data = results.data;
-    const tableBody = document.getElementById('tableBody');
-    const tableHeader = document.getElementById('tableHeader');
-    tableBody.innerHTML='';
-    tableHeader.innerHTML='';
-
-    if(!data || data.length===0) return;
-
-    let signupCol = null;
-    let hiddenCol = null;
-
-    Object.keys(data[0]).forEach(key=>{
-      const lowerKey = key.toLowerCase().trim();
-      if(lowerKey==='sign up') signupCol = key;
-      if(lowerKey==='hidden') hiddenCol = key;
-
-      if(key!==hiddenCol){
-        const th = document.createElement('th');
-        th.textContent = key;
-        tableHeader.appendChild(th);
-      }
-    });
-
-    data.forEach(row=>{
-      const tr=document.createElement('tr');
-      Object.keys(row).forEach(key=>{
-        if(key===hiddenCol) return;
-        const td=document.createElement('td');
-        if(key===signupCol && row[key].trim()!==''){
-          const a=document.createElement('a');
-          a.href=row[key];
-          a.target="_blank";
-          a.textContent="Sign Up";
-          td.appendChild(a);
-        } else {
-          td.textContent=row[key];
-        }
-        tr.appendChild(td);
-      });
-      tableBody.appendChild(tr);
-    });
-  }
-});
-
-document.getElementById('searchInput').addEventListener('input', function(){
-  const filter=this.value.toLowerCase();
-  document.querySelectorAll('#tableBody tr').forEach(tr=>{
-    tr.style.display=tr.textContent.toLowerCase().includes(filter)?'':'none';
-  });
-});
-
-function scrollToSection(sectionId){
-  document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-}
-
-const readBtn = document.getElementById('readAloudBtn');
-readBtn.addEventListener('click', () => {
-  const synth = window.speechSynthesis;
-  if (synth.speaking) {
-    synth.cancel();
-    readBtn.textContent = '🔊 Read Aloud';
-    return;
-  }
-  const content = document.getElementById('notificationsContent').innerText.trim();
-  if (!content) return;
-  const speech = new SpeechSynthesisUtterance(content);
-  speech.lang = 'en-CA';
-  synth.speak(speech);
-  readBtn.textContent = '⏹ Stop Reading';
-  speech.onend = () => readBtn.textContent = '🔊 Read Aloud';
-});
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
 </script>
 
 </body>
 </html>
-
-
-
-
