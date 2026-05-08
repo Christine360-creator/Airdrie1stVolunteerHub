@@ -562,39 +562,42 @@
 
   <button id="darkModeToggle">🌙 Dark Mode</button>
 
-</div>
-
-
 
 <section id="notificationsSection">
 
-  <h2>📢 Notifications</h2>
+  <h2>📢 Information</h2>
 
   <button id="readAloudBtn">🔊 Read Aloud</button>
 
-  <div id="notificationsContent"></div>
-
-</section>
-
-
-
-<section id="howToSection">
-
-  <h2>❓ How To Use</h2>
-
-  <div class="fundraiser-card">
-
+  <div id="notificationsContent">
     <p>Welcome, everyone!</p>
 
-    <p>All volunteer sign-ups are in one place now.</p>
+    <p>All the volunteer sign-up forms are now in one easy place, no more digging through emails!</p>
 
-    <p>Click calendar or table to view shifts.</p>
+    <p>I will still send out email reminders and links when new shifts open or spots need to be filled, but you can also come here anytime to sign up.</p>
 
-    <p>Contact Christine if you need help.</p>
+    <p>Just click on an event in the Agenda view or Calendar view to see the details and sign-up form.</p>
 
+    <p>If you have any trouble or need to make changes, please contact below!</p>
+
+    <p>Please note: A new section called Fundraisers has been added to this page. This is where you’ll find links to our current fundraisers and quick words to share them.</p>
   </div>
 
 </section>
+
+<script>
+document.getElementById("readAloudBtn").addEventListener("click", function () {
+  const text = document.getElementById("notificationsContent").innerText;
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = "en-CA";
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(speech);
+});
+</script>
+
+
+  
+
 
 
 
