@@ -5,11 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Volunteer Hub</title>
 
-<!-- Site Icon / Favicon for all devices -->
 <link rel="icon" type="image/png" href="logod.png?v=2">
 <link rel="apple-touch-icon" href="logod.png?v=2">
 
-<!-- Force iOS to update icon -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
@@ -37,8 +35,8 @@
   body.dark-mode {
     --bg-light: #121212;
     --text-dark: #f5f5f5;
-    --row-light: #1f1f1f;
-    --row-dark: #2a2a2a;
+    --row-light: #1b1b1b;
+    --row-dark: #242424;
   }
 
   header {
@@ -114,7 +112,7 @@
     color: var(--brand-purple);
     font-size:1.5rem;
   }
-  
+
   #searchInput, .donationSearch {
     width:100%;
     padding:10px;
@@ -124,12 +122,13 @@
     font-size:1rem;
     box-sizing:border-box;
   }
-  
+
   .table-container {
     overflow-x:auto;
     max-height:450px;
-    border:1px solid #ccc;
-    border-radius:12px;
+    border:none;
+    border-radius:18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
   }
 
   table {
@@ -139,8 +138,8 @@
   }
 
   th, td {
-    padding:10px 14px;
-    border-bottom:1px solid #ddd;
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     text-align:left;
     font-size:0.95rem;
   }
@@ -167,7 +166,11 @@
   }
 
   tbody tr:hover {
-    background-color: #e0e0f0;
+    background-color: #ece9f7;
+  }
+
+  body.dark-mode tbody tr:hover {
+    background-color: #353535;
   }
 
   #readAloudBtn {
@@ -234,7 +237,6 @@
     padding: 10px 16px;
     border-radius: 30px;
     text-decoration: none;
-    transition: background 0.3s ease, transform 0.2s ease;
   }
 
   .fundraiser-card a:hover {
@@ -242,69 +244,57 @@
     transform: translateY(-2px);
   }
 
+  #notificationsContent p {
+    background: var(--bg-light);
+    padding: 14px 18px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    text-align:left;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+  }
+
+  #notificationsContent p:hover {
+    transform: translateY(-2px);
+  }
+
   @media (max-width:600px){
-    h2{
-      font-size:1.2rem;
-    }
-
-    th,td{
-      padding:6px 8px;
-      font-size:0.85rem;
-    }
-
-    #searchInput, .donationSearch{
-      padding:8px;
-      font-size:0.9rem;
-    }
-
-    .button-container button {
-      padding:8px 12px;
-      font-size:0.9rem;
-    }
+    h2{font-size:1.2rem;}
+    th,td{padding:6px 8px;font-size:0.85rem;}
+    #searchInput, .donationSearch{padding:8px;font-size:0.9rem;}
+    .button-container button{padding:8px 12px;font-size:0.9rem;}
   }
 
-  /* Responsive video */
-  .videoWrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    border-radius: 10px;
-  }
-
-  .videoWrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
 </style>
 </head>
+
 <body>
 
 <header>
-  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
+  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png">
   <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
 </header>
 
 <div class="button-container">
-  <button onclick="scrollToSection('volunteerSection')">Table View</button>
-  <button onclick="scrollToSection('calendarSection')">Calendar View</button>
-  <button onclick="scrollToSection('fundraisersSection')">Fundraisers</button>
+  <button onclick="scrollToSection('volunteerSection')">📃Table View</button>
+  <button onclick="scrollToSection('calendarSection')">📅Calendar View</button>
+  <button onclick="scrollToSection('fundraisersSection')">💰Fundraisers</button>
   <button id="darkModeToggle">🌙 Dark Mode</button>
 </div>
 
 <section id="notificationsSection">
-  <h2>Notifications & How-to</h2>
+  <h2>📢 Notifications</h2>
   <button id="readAloudBtn">🔊 Read Aloud</button>
-  <div class="content" id="notificationsContent">
+  <div id="notificationsContent"></div>
+</section>
+
+<section id="howToSection">
+  <h2>❓ How To Use</h2>
+  <div class="fundraiser-card">
     <p>Welcome, everyone!</p>
-    <p>All the volunteer sign-up forms are now in one easy place — no more digging through emails!</p>
-    <p>I will still send out email reminders and links when new shifts open or spots need to be filled, but you can also come here anytime to sign up.</p>
-    <p>Just click on an event in the Agenda view or Calendar view to see the details and sign-up form.</p>
-    <p>If you have any trouble or need to make changes, please contact Christine — I’m happy to help!</p>
-    <p>Please note: A new section called Fundraisers has been added to this page. This is where you’ll find links to our current fundraisers and quick words to share them.</p>
+    <p>All volunteer sign-ups are in one place now.</p>
+    <p>Click calendar or table to view shifts.</p>
+    <p>Contact Christine if you need help.</p>
   </div>
 </section>
 
@@ -312,7 +302,7 @@
   <h2>Volunteer Schedule</h2>
   <input type="text" id="searchInput" placeholder="Search in table...">
   <div class="table-container">
-    <table id="volunteerTable">
+    <table>
       <thead><tr id="tableHeader"></tr></thead>
       <tbody id="tableBody"></tbody>
     </table>
@@ -321,182 +311,118 @@
 
 <section id="calendarSection">
   <h2>Calendar View</h2>
-  <iframe 
-    src="https://calendar.google.com/calendar/embed?src=6d8c4ff38f75611efb175c6cb8a575bce4d3521b797303078b8b04de29294f38%40group.calendar.google.com&ctz=America%2FEdmonton" 
-    style="border:0; border-radius: 14px;" 
-    width="100%" 
-    height="600" 
-    frameborder="0" 
-    scrolling="no">
-  </iframe>
+  <iframe src="https://calendar.google.com/calendar/embed?src=6d8c4ff38f75611efb175c6cb8a575bce4d3521b797303078b8b04de29294f38%40group.calendar.google.com&ctz=America%2FEdmonton"
+    style="border:0; border-radius:14px;" width="100%" height="600"></iframe>
 </section>
 
 <section id="fundraisersSection">
   <h2>Fundraisers</h2>
-  <p>Here you will find links to our current fundraisers and the links to copy and paste to share them.</p>
 
   <div class="fundraiser-cards">
-
     <div class="fundraiser-card">
-      <h3>🌱 True Earth</h3>
-      <p>True Earth offers eco-friendly laundry strips and household cleaning products that help reduce plastic waste.</p>
-      <p>When you make a purchase through our link, Airdrie 1st receives 20% of the sale, at no extra cost to buyer.</p>
-      <a href="https://ca.tru.earth/collections/fundraising?irclickid=z3z2GpQNnxycTvv2tD28yVrmUkpSvbQZTR8AyU0&irgwc=1&afsrc=1&utm_source=6872328&mp_value1=Airdrie%201st%20Club&timestamp=1769187020709&utm_campaign=impact&im_rewards=1" target="_blank">
-        Visit Fundraiser
-      </a>
+      <h3>True Earth</h3>
+      <p>Eco-friendly laundry products.</p>
+      <a href="https://ca.tru.earth/collections/fundraising?irclickid=z3z2GpQNnxycTvv2tD28yVrmUkpSvbQZTR8AyU0&irgwc=1&afsrc=1&utm_source=6872328&mp_value1=Airdrie%201st%20Club&timestamp=1769187020709&utm_campaign=impact&im_rewards=1">Visit</a>
     </div>
 
     <div class="fundraiser-card">
-      <h3>🚗 Great White Car Wash</h3>
-      <p>When you sell a $25 gift card Airdrie 1st makes 20% of that sale.</p>
-      <p>To place an order email Tanya at partnerships@airdrie1st.com</p>
-      <a href="https://greatwhitewash.com/locations/sierra-springs-sw-airdrie/" target="_blank">
-        Visit Fundraiser
-      </a>
+      <h3>Great White Car Wash</h3>
+      <p>Gift card fundraising.</p>
+      <a href="https://greatwhitewash.com/locations/sierra-springs-sw-airdrie/">Visit</a>
     </div>
-
   </div>
 </section>
 
 <footer>
-  Contact me: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</a>
+  Contact: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</a>
 </footer>
 
 <script>
-// --- Volunteer Table ---
-const volunteerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + new Date().getTime();
+const darkModeBtn = document.getElementById("darkModeToggle");
+
+darkModeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  darkModeBtn.textContent =
+    document.body.classList.contains("dark-mode")
+      ? "☀️ Light Mode"
+      : "🌙 Dark Mode";
+});
+
+function scrollToSection(id){
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
+}
+
+const volunteerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + Date.now();
 
 Papa.parse(volunteerCsvUrl, {
   download:true,
   header:true,
-  skipEmptyLines:true,
-  complete: function(results){
+  complete:function(results){
     const data = results.data;
-    const tableBody = document.getElementById('tableBody');
-    const tableHeader = document.getElementById('tableHeader');
-    tableBody.innerHTML='';
-    tableHeader.innerHTML='';
+    const body = document.getElementById("tableBody");
+    const head = document.getElementById("tableHeader");
 
-    if(!data || data.length===0) return;
+    body.innerHTML="";
+    head.innerHTML="";
 
-    let signupCol = null;
-    let hiddenCol = null;
+    let signupCol=null;
 
-    Object.keys(data[0]).forEach(key=>{
-      const lowerKey = key.toLowerCase().trim();
-      if(lowerKey==='sign up') signupCol = key;
-      if(lowerKey==='hidden') hiddenCol = key;
-
-      if(key!==hiddenCol){
-        const th = document.createElement('th');
-        th.textContent = key;
-        tableHeader.appendChild(th); 
-      }
+    Object.keys(data[0]).forEach(k=>{
+      if(k.toLowerCase()==="sign up") signupCol=k;
+      const th=document.createElement("th");
+      th.textContent=k;
+      head.appendChild(th);
     });
 
     data.forEach(row=>{
-      const tr=document.createElement('tr');
-      Object.keys(row).forEach(key=>{
-        if(key===hiddenCol) return;
-        const td=document.createElement('td');
-        if(key===signupCol && row[key].trim()!==''){
-          const a=document.createElement('a');
-          a.href=row[key];
-          a.target="_blank";
+      const tr=document.createElement("tr");
+
+      Object.keys(row).forEach(k=>{
+        const td=document.createElement("td");
+
+        if(k===signupCol && row[k]){
+          const a=document.createElement("a");
+          a.href=row[k];
           a.textContent="Sign Up";
+          a.target="_blank";
           td.appendChild(a);
         } else {
-          td.textContent=row[key];
+          td.textContent=row[k] || "";
         }
+
         tr.appendChild(td);
       });
-      tableBody.appendChild(tr);
+
+      body.appendChild(tr);
     });
   }
 });
 
-// --- Search for Volunteer Table ---
-document.getElementById('searchInput').addEventListener('input', function(){
-  const filter=this.value.toLowerCase();
-  document.querySelectorAll('#tableBody tr').forEach(tr=>{
-    tr.style.display=tr.textContent.toLowerCase().includes(filter)?'':'none';
-  });
-});
+const notifUrl='https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv';
 
-// --- Smooth scroll with sticky header offset ---
-function scrollToSection(sectionId){
-  const headerOffset = 70;
-  const element = document.getElementById(sectionId);
-  const elementPosition = element.getBoundingClientRect().top;
-  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-  window.scrollTo({
-       top: offsetPosition,
-       behavior: "smooth"
-  });
-}
-
-// --- Notifications CSV ---
-const notificationsCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv';
-
-Papa.parse(notificationsCsvUrl, {
-  download: true,
-  header: true,
-  skipEmptyLines: true,
-  complete: function(results){
-    const data = results.data;
-    const container = document.getElementById('notificationsContent');
-
-    data.forEach(row=>{
-      const p=document.createElement('p');
-      p.textContent=row['Message'];
-      container.appendChild(p);
+Papa.parse(notifUrl,{
+  download:true,
+  header:true,
+  complete:function(res){
+    const c=document.getElementById("notificationsContent");
+    res.data.forEach(r=>{
+      const p=document.createElement("p");
+      p.textContent=r.Message || "";
+      c.appendChild(p);
     });
   }
 });
 
-// --- Read Aloud ---
-const readBtn = document.getElementById('readAloudBtn');
+const readBtn=document.getElementById("readAloudBtn");
 
-readBtn.addEventListener('click', () => {
-  const synth = window.speechSynthesis;
+readBtn.addEventListener("click",()=>{
+  const synth=window.speechSynthesis;
+  if(synth.speaking){synth.cancel();return;}
 
-  if (synth.speaking) {
-    synth.cancel();
-    readBtn.textContent = '🔊 Read Aloud';
-    return;
-  }
-
-  const content = document.getElementById('notificationsContent').innerText.trim();
-
-  if (!content) {
-    alert('There are no notifications to read.');
-    return;
-  }
-
-  const speech = new SpeechSynthesisUtterance(content);
-  speech.lang = 'en-CA';
-
-  synth.speak(speech);
-
-  readBtn.textContent = '⏹ Stop Reading';
-
-  speech.onend = () => {
-    readBtn.textContent = '🔊 Read Aloud';
-  };
-});
-
-// --- Dark Mode Toggle ---
-const darkModeBtn = document.getElementById('darkModeToggle');
-
-darkModeBtn.addEventListener('click', () => {
-  document.body.classList.toggle('dark-mode');
-
-  if(document.body.classList.contains('dark-mode')){
-    darkModeBtn.textContent = '☀️ Light Mode';
-  } else {
-    darkModeBtn.textContent = '🌙 Dark Mode';
-  }
+  const text=document.getElementById("notificationsContent").innerText;
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang="en-CA";
+  synth.speak(u);
 });
 </script>
 
