@@ -23,8 +23,8 @@
   --row-dark:#ffffff;
 }
 
-/* DARK MODE FIX */
-body.dark-mode {
+/* DARK MODE ONLY FIXES */
+body.dark-mode{
   --bg-light:#121212;
   --text-dark:#f5f5f5;
   --row-light:#1b1b1b;
@@ -41,20 +41,35 @@ body{
   transition:0.3s;
 }
 
-/* HEADER */
+/* HEADER (UNCHANGED SIZE — FIXED) */
 header{
   background:var(--brand-purple);
   color:white;
-  padding:10px;
+  padding:10px 15px;
   text-align:center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
 }
 
-/* BUTTONS */
+header img{
+  height:45px;
+  margin-right:10px;
+}
+
+header h1{
+  color:var(--brand-yellow);
+  font-size:1.4rem;
+  margin:0;
+}
+
+/* BUTTONS (RESTORED ICONS STYLE FROM YOUR ORIGINAL) */
 .button-container{
   position:sticky;
   top:0;
   background:var(--bg-light);
-  padding:10px;
+  padding:10px 0;
   text-align:center;
   z-index:99;
   box-shadow:0 2px 5px rgba(0,0,0,0.1);
@@ -95,12 +110,12 @@ section{
   border:1px solid #ccc;
 }
 
-/* TABLE */
+/* TABLE CLEANUP */
 .table-container{
   overflow-x:auto;
-  border-radius:12px;
   max-height:450px;
   border:none;
+  border-radius:16px;
   box-shadow:0 4px 14px rgba(0,0,0,0.08);
 }
 
@@ -127,7 +142,7 @@ th{
 tbody tr:nth-child(even){background:var(--row-light);}
 tbody tr:nth-child(odd){background:var(--row-dark);}
 
-/* FIX DARK MODE HOVER */
+/* FIX DARK MODE HOVER (IMPORTANT) */
 tbody tr:hover{
   background:#ece9f7;
 }
@@ -145,7 +160,7 @@ body.dark-mode tbody tr:hover{
   border-radius:30px;
 }
 
-/* NOTIFICATIONS CARD STYLE */
+/* NOTIFICATIONS CARDS */
 #notificationsContent p{
   background:var(--bg-light);
   padding:12px 14px;
@@ -154,11 +169,11 @@ body.dark-mode tbody tr:hover{
   box-shadow:0 2px 8px rgba(0,0,0,0.06);
 }
 
-/* HOW TO SECTION */
+/* HOW-TO BOX */
 .howto-box{
+  background:var(--bg-light);
   padding:15px;
   border-radius:12px;
-  background:var(--bg-light);
   text-align:left;
 }
 
@@ -176,7 +191,7 @@ body.dark-mode tbody tr:hover{
   box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 
-/* CALENDAR FIX */
+/* CALENDAR IMPROVEMENT ONLY */
 iframe{
   border-radius:16px;
   box-shadow:0 4px 14px rgba(0,0,0,0.08);
@@ -192,15 +207,16 @@ iframe{
 <body>
 
 <header>
-  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" style="height:45px;">
+  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png">
   <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
 </header>
 
+<!-- BUTTONS (ICONS RESTORED EXACTLY AS YOU HAD THEM) -->
 <div class="button-container">
-  <button onclick="scrollToSection('volunteerSection')">Table View</button>
-  <button onclick="scrollToSection('calendarSection')">Calendar View</button>
-  <button onclick="scrollToSection('fundraisersSection')">Fundraisers</button>
-  <button id="darkModeToggle">Dark Mode</button>
+  <button onclick="scrollToSection('volunteerSection')">📃Table View</button>
+  <button onclick="scrollToSection('calendarSection')">📅Calendar View</button>
+  <button onclick="scrollToSection('fundraisersSection')">💰Fundraisers</button>
+  <button id="darkModeToggle">🌙 Dark Mode</button>
 </div>
 
 <!-- NOTIFICATIONS (UNCHANGED CONTENT) -->
@@ -210,7 +226,7 @@ iframe{
   <div id="notificationsContent"></div>
 </section>
 
-<!-- HOW TO (SEPARATED BUT SAME TEXT) -->
+<!-- HOW TO (SEPARATED ONLY) -->
 <section id="howToSection">
   <h2>How-to</h2>
   <div class="howto-box">
@@ -235,7 +251,7 @@ iframe{
   </div>
 </section>
 
-<!-- CALENDAR (IMPROVED VISUAL ONLY) -->
+<!-- CALENDAR -->
 <section id="calendarSection">
   <h2>Calendar View</h2>
   <iframe 
@@ -244,7 +260,7 @@ iframe{
   </iframe>
 </section>
 
-<!-- FUNDRAISERS (UNCHANGED LINKS + TEXT) -->
+<!-- FUNDRAISERS (UNCHANGED) -->
 <section id="fundraisersSection">
   <h2>Fundraisers</h2>
 
@@ -271,61 +287,77 @@ Contact me: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</
 </footer>
 
 <script>
-// dark mode
+
+// DARK MODE
 document.getElementById("darkModeToggle").onclick=()=>{
   document.body.classList.toggle("dark-mode");
 };
 
-// scroll
+// SCROLL
 function scrollToSection(id){
   document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
 
-// table
+// TABLE
 Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv",{
-  download:true,
-  header:true,
-  complete:(res)=>{
-    const body=document.getElementById("tableBody");
-    const head=document.getElementById("tableHeader");
-    body.innerHTML=""; head.innerHTML="";
-    const data=res.data;
+download:true,
+header:true,
+complete:(res)=>{
+const body=document.getElementById("tableBody");
+const head=document.getElementById("tableHeader");
 
-    let signup=null;
+body.innerHTML=""; head.innerHTML="";
 
-    Object.keys(data[0]).forEach(k=>{
-      if(k.toLowerCase()==="sign up") signup=k;
-      head.innerHTML+=`<th>${k}</th>`;
-    });
+let signup=null;
 
-    data.forEach(r=>{
-      let tr=document.createElement("tr");
-      Object.keys(r).forEach(k=>{
-        let td=document.createElement("td");
-        if(k===signup){
-          td.innerHTML=`<a href="${r[k]}" target="_blank">Sign Up</a>`;
-        } else {
-          td.textContent=r[k]||"";
-        }
-        tr.appendChild(td);
-      });
-      body.appendChild(tr);
-    });
-  }
+Object.keys(res.data[0]).forEach(k=>{
+if(k.toLowerCase()==="sign up") signup=k;
+head.innerHTML+=`<th>${k}</th>`;
 });
 
-// notifications
+res.data.forEach(r=>{
+let tr=document.createElement("tr");
+
+Object.keys(r).forEach(k=>{
+let td=document.createElement("td");
+
+if(k===signup){
+td.innerHTML=`<a href="${r[k]}" target="_blank">Sign Up</a>`;
+} else {
+td.textContent=r[k]||"";
+}
+
+tr.appendChild(td);
+});
+
+body.appendChild(tr);
+});
+}
+});
+
+// NOTIFICATIONS
 Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv",{
-  download:true,
-  header:true,
-  complete:(res)=>{
-    const c=document.getElementById("notificationsContent");
-    res.data.forEach(r=>{
-      let p=document.createElement("p");
-      p.textContent=r.Message;
-      c.appendChild(p);
-    });
-  }
+download:true,
+header:true,
+complete:(res)=>{
+const c=document.getElementById("notificationsContent");
+res.data.forEach(r=>{
+let p=document.createElement("p");
+p.textContent=r.Message;
+c.appendChild(p);
+});
+}
+});
+
+// READ ALOUD
+const readBtn=document.getElementById("readAloudBtn");
+readBtn.addEventListener("click",()=>{
+const synth=window.speechSynthesis;
+if(synth.speaking){synth.cancel();return;}
+const text=document.getElementById("notificationsContent").innerText;
+const u=new SpeechSynthesisUtterance(text);
+u.lang="en-CA";
+synth.speak(u);
 });
 </script>
 
