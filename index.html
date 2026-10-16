@@ -336,25 +336,29 @@ Papa.parse(volunteerCsvUrl, {
           const td = document.createElement("td");
 
           
-       if(k === signupCol && row[k]){
-  // 1. Sign Up link
-  const a = document.createElement("a");
-  a.href = row[k]; 
-  a.textContent = "Sign Up"; 
-  a.target = "_blank";
-  a.style.color = "var(--brand-purple)"; 
-  a.style.fontWeight = "bold";
-  td.appendChild(a);
+if(k === signupCol && row[k]){
+            // 1. Sign Up link
+            const a = document.createElement("a");
+            a.href = row[k]; 
+            a.textContent = "Sign Up"; 
+            a.target = "_blank";
+            a.style.color = "var(--brand-purple)"; 
+            a.style.fontWeight = "bold";
+            td.appendChild(a);
 
-  // 2. Add to Calendar link
-  const title = encodeURIComponent(row["Event"] || "Volunteer Shift");
-  const cal = document.createElement("a");
-  cal.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}`;
-  cal.textContent = " | 📅 Add to Cal";
-  cal.target = "_blank";
-  cal.style.color = "var(--brand-purple)";
-  td.appendChild(cal);
-}
+            // 2. Pull values from your DATE and SHIFTS columns
+            const shiftName = encodeURIComponent(row["Shifts"] || "Volunteer Shift");
+            const shiftDate = row["Date"] || "";
+            const details = encodeURIComponent(`Date: ${shiftDate}\nShift: ${row["Shifts"] || ""}`);
+
+            // 3. Calendar link
+            const cal = document.createElement("a");
+            cal.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${shiftName}&details=${details}`;
+            cal.textContent = " | 📅 Add to Cal";
+            cal.target = "_blank";
+            cal.style.color = "var(--brand-purple)";
+            td.appendChild(cal);
+          } else {
           
           
           else {
