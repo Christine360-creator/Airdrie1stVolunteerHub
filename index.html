@@ -1,425 +1,449 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Volunteer Hub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Hub</title>
 
-<link rel="icon" type="image/png" href="logod.png?v=2">
-<link rel="apple-touch-icon" href="logod.png?v=2">
+    <link rel="icon" type="image/png" href="logod.png?v=2">
+    <link rel="apple-touch-icon" href="logod.png?v=2">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
-<style>
-  :root {
-    --brand-purple: #5B2E91;
-    --brand-yellow: #FFCA00;
-    --bg-light: #F4F5FA;
-    --text-dark: #202040;
-    --row-light: #f9f9f9;
-    --row-dark: #ffffff;
-  }
+    <style>
+        :root {
+            --brand-purple: #5B2E91;
+            --brand-yellow: #FFCA00;
+            --bg-light: #F4F5FA;
+            --text-dark: #202040;
+            --row-light: #f9f9f9;
+            --row-dark: #ffffff;
+        }
 
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    margin:0;
-    padding:0;
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-  body.dark-mode {
-    --bg-light: #121212;
-    --text-dark: #f5f5f5;
-    --row-light: #1b1b1b;
-    --row-dark: #242424;
-  }
+        body.dark-mode {
+            --bg-light: #121212;
+            --text-dark: #f5f5f5;
+            --row-light: #1b1b1b;
+            --row-dark: #242424;
+        }
 
-  header {
-    background-color: var(--brand-purple);
-    color: white;
-    padding: 15px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+        header {
+            background-color: var(--brand-purple);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-  header img {
-    height: 50px;
-    margin-right: 15px;
-  }
+        header img {
+            height: 50px;
+            margin-right: 15px;
+        }
 
-  header h1 {
-    color: var(--brand-yellow);
-    font-size: 1.6rem;
-    margin: 0;
-  }
+        header h1 {
+            color: var(--brand-yellow);
+            font-size: 1.6rem;
+            margin: 0;
+        }
 
-  .button-container {
-    position: sticky;
-    top: 0;
-    background: var(--bg-light);
-    padding: 10px 0;
-    text-align: center;
-    z-index: 99;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
+        .button-container {
+            position: sticky;
+            top: 0;
+            background: var(--bg-light);
+            padding: 10px 0;
+            text-align: center;
+            z-index: 99;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-  .button-container button {
-    background-color: var(--brand-purple);
-    color: var(--brand-yellow);
-    border: none;
-    padding: 10px 18px;
-    margin: 5px;
-    font-size: 1rem;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+        .button-container button {
+            background-color: var(--brand-purple);
+            color: var(--brand-yellow);
+            border: none;
+            padding: 10px 18px;
+            margin: 5px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-  .button-container button:hover {
-    background-color: #442060;
-    transform: translateY(-2px);
-  }
+        .button-container button:hover {
+            background-color: #442060;
+            transform: translateY(-2px);
+        }
 
-  main { flex: 1; }
+        main {
+            flex: 1;
+        }
 
-  section {
-    margin: 25px auto;
-    width: 90%;
-    max-width: 1000px;
-    background: var(--row-dark);
-    border-radius: 16px;
-    padding: 25px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-  }
+        section {
+            margin: 25px auto;
+            width: 90%;
+            max-width: 1000px;
+            background: var(--row-dark);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+        }
 
-  h2 {
-    color: var(--brand-purple);
-    text-align: center;
-    margin-top: 0;
-    font-size: 1.8rem;
-  }
+        h2 {
+            color: var(--brand-purple);
+            text-align: center;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
 
-  .info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-  }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
 
-  .info-card {
-    background: var(--bg-light);
-    padding: 20px;
-    border-radius: 12px;
-    text-align: left;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-  }
+        .info-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
 
-  #readAloudBtn {
-    background: var(--brand-purple);
-    color: var(--brand-yellow);
-    border: none;
-    padding: 8px 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
+        #readAloudBtn {
+            background: var(--brand-purple);
+            color: var(--brand-yellow);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
 
-  #searchInput {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-  }
+        #searchInput {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
 
-  .table-container {
-    overflow-x: auto;
-    max-height: 500px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  }
+        .table-container {
+            overflow-x: auto;
+            max-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
-  }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
 
-  th, td {
-    padding: 14px;
-    text-align: left;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-  }
+        th,
+        td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
 
-  th {
-    position: sticky;
-    top: 0;
-    background: var(--brand-purple);
-    color: var(--brand-yellow);
-    z-index: 2;
-  }
+        th {
+            position: sticky;
+            top: 0;
+            background: var(--brand-purple);
+            color: var(--brand-yellow);
+            z-index: 2;
+        }
 
-  tbody tr:hover { background-color: #ece9f7; }
-  body.dark-mode tbody tr:hover { background-color: #353535; }
+        tbody tr:hover {
+            background-color: #ece9f7;
+        }
 
-  /* Fundraisers Styling */
-  .fundraiser-item {
-    background: var(--bg-light);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    border-left: 6px solid var(--brand-purple);
-    text-align: left;
-  }
+        body.dark-mode tbody tr:hover {
+            background-color: #353535;
+        }
 
-  .fundraiser-item h3 { color: var(--brand-purple); margin-top: 0; }
-  .fundraiser-item a {
-    display: inline-block;
-    background: var(--brand-purple);
-    color: var(--brand-yellow);
-    padding: 10px 20px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 10px;
-  }
+        /* Fundraisers Styling */
+        .fundraiser-item {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 6px solid var(--brand-purple);
+            text-align: left;
+        }
 
-  footer {
-    background-color: var(--brand-purple);
-    color: white;
-    padding: 40px 20px;
-    text-align: center;
-    margin-top: 50px;
-  }
+        .fundraiser-item h3 {
+            color: var(--brand-purple);
+            margin-top: 0;
+        }
 
-  footer a { color: var(--brand-yellow); text-decoration: none; font-weight: bold; }
+        .fundraiser-item a {
+            display: inline-block;
+            background: var(--brand-purple);
+            color: var(--brand-yellow);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-  @media (max-width: 800px) {
-    .info-grid { grid-template-columns: 1fr; }
-  }
-</style>
+        footer {
+            background-color: var(--brand-purple);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: var(--brand-yellow);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 800px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-  <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png" alt="Airdrie 1st Logo">
-  <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
-</header>
+    <header>
+        <img src="https://raw.githubusercontent.com/Christine360-creator/VolunteerHub/c65ad3dee2ed68a1749eab9f566490ebf80b7dd8/airdrie1st%20logo.png"
+            alt="Airdrie 1st Logo">
+        <h1>Welcome to Airdrie 1st Volunteer Hub</h1>
+    </header>
 
-<div class="button-container">
-  <button onclick="scrollToSection('volunteerSection')">📃 Table View</button>
-  <button onclick="scrollToSection('calendarSection')">📅 Calendar View</button>
-  <button onclick="scrollToSection('fundraisersSection')">💰 Fundraisers</button>
-  <button id="darkModeToggle">🌙 Dark Mode</button>
-</div>
-
-<main>
-  <!-- Restored Content Section -->
-  <section id="infoSection">
-    <div class="info-grid">
-      <div class="info-card">
-        <h2>📢 Notifications</h2>
-        <button id="readAloudBtn">🔊 Read Aloud</button>
-        <div id="notificationsContent">
-          <h1> Welcome! </h1>
-            <P> 🎉 Come celebrate with us! Airdrie 1st is a finalist for the Community Spirit Award at the Airdrie Regional Business Awards Gala on October 22 at 6:30 p.m. at Bert Church Theatre!
-                  Tickets are at each member’s own cost and include light appetizers, sweet treats, and a complimentary drink. Get tickets here: <p>      <a href="https://tickets.airdrie.ca/EventAvailability?EventId=16001" target="_blank">Click here to buy tickets!</a> </p>
-                  ❤️ Dress: Black pants, white top & red vest. Sign up if you’d like to join your fellow members for a fun evening of community recognition!.</p>
-            </P>🤔Reminders: <p>Be sure to check out our Tru Earth Fundraising page! 🌿 If you'd like to purchase a Great White Car Wash gift card, please reach out to Tanya. </p>
-        </div>
-      </div>
-      
-      <div class="info-card">
-        <h2>❓ How To Use</h2>
-        <p>Welcome, everyone!</p>
-        <p>All the volunteer sign-up forms are now in one easy place, no more digging through emails!</p>
-        <p>I will still send out email reminders and links when new shifts open or spots need to be filled, but you can also come here anytime to sign up.</p>
-        <p>Just click on an event in the Schedule view OR Calendar view to see the details and sign-up form.</p>
-        <p>If you have any trouble or need to make changes, please contact Christine. I’m happy to help!</p>
-        <p><strong>Please note:</strong> A new section called Fundraisers has been added to this page. This is where you’ll find links to our current fundraisers and quick words to share them.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="volunteerSection">
-    <h2>Volunteer Schedule</h2>
-    <input type="text" id="searchInput" placeholder="Search for shifts, locations, or names...">
-    <div class="table-container">
-      <table>
-        <thead><tr id="tableHeader"></tr></thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="calendarSection">
-    <h2>Calendar View</h2>
-    <iframe src="https://calendar.google.com/calendar/embed?src=6d8c4ff38f75611efb175c6cb8a575bce4d3521b797303078b8b04de29294f38%40group.calendar.google.com&ctz=America%2FEdmonton"
-      style="border:0; border-radius:14px;" width="100%" height="600"></iframe>
-  </section>
-
-  <section id="fundraisersSection">
-    <h2>Fundraisers</h2>
-    <p style="margin-bottom: 25px;">Here you will find links to our current fundraisers and the links to copy and paste to share them.</p>
-    
-    <div class="fundraiser-item">
-      <h3>True Earth</h3>
-      <p>True Earth offers eco-friendly laundry strips and household cleaning products that help reduce plastic waste.</p>
-      <p>When you make a purchase through our link, Airdrie 1st receives 20% of the sale, at no extra cost to buyer.</p>
-      <a href="https://ca.tru.earth/collections/fundraising?irclickid=z3z2GpQNnxycTvv2tD28yVrmUkpSvbQZTR8AyU0&irgwc=1&afsrc=1&utm_source=6872328&mp_value1=Airdrie%201st%20Club&timestamp=1769187020709&utm_campaign=impact&im_rewards=1" target="_blank">Tru Earth Link</a>
+    <div class="button-container">
+        <button onclick="scrollToSection('volunteerSection')">📃 Table View</button>
+        <button onclick="scrollToSection('calendarSection')">📅 Calendar View</button>
+        <button onclick="scrollToSection('fundraisersSection')">💰 Fundraisers</button>
+        <button id="darkModeToggle">🌙 Dark Mode</button>
     </div>
 
-    <div class="fundraiser-item">
-      <h3>Great White Car Wash</h3>
-      <p>When you sell a $25 gift card Airdrie 1st makes 20% of that sale. To place an order email Tanya at <a href="mailto:partnerships@airdrie1st.com" style="display: inline; background: none; padding: 0; color: #0056b3; text-decoration: underline; font-weight: bold;">partnerships@airdrie1st.com</a></p>
-      <a href="https://greatwhitewash.com/locations/sierra-springs-sw-airdrie/" target="_blank">Great White Car Wash Link</a>
-    </div>
-  </section>
-</main>
+    <main>
+        <!-- Restored Content Section -->
+        <section id="infoSection">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h2>📢 Notifications</h2>
+                    <button id="readAloudBtn">🔊 Read Aloud</button>
+                    <div id="notificationsContent">
+                        <h1> Welcome! </h1>
+                        <P> 🎉 Come celebrate with us! Airdrie 1st is a finalist for the Community Spirit Award at the
+                            Airdrie Regional Business Awards Gala on October 22 at 6:30 p.m. at Bert Church Theatre!
+                            Tickets are at each member’s own cost and include light appetizers, sweet treats, and a
+                            complimentary drink. Get tickets here:
+                        <p> <a href="https://tickets.airdrie.ca/EventAvailability?EventId=16001" target="_blank">Click
+                                here to buy tickets!</a> </p>
+                        ❤️ Dress: Black pants, white top & red vest. Sign up if you’d like to join your fellow members
+                        for a fun evening of community recognition!.</p>
+                        </P>🤔Reminders: <p>Be sure to check out our Tru Earth Fundraising page! 🌿 If you'd like to
+                            purchase a Great White Car Wash gift card, please reach out to Tanya. </p>
+                    </div>
+                </div>
 
-<footer>
-  <p>© 2026 Airdrie 1st Volunteer Hub</p>
-  <p>Need help? Contact: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</a></p>
-</footer>
+                <div class="info-card">
+                    <h2>❓ How To Use</h2>
+                    <p>Welcome, everyone!</p>
+                    <p>All the volunteer sign-up forms are now in one easy place, no more digging through emails!</p>
+                    <p>I will still send out email reminders and links when new shifts open or spots need to be filled,
+                        but you can also come here anytime to sign up.</p>
+                    <p>Just click on an event in the Schedule view OR Calendar view to see the details and sign-up form.
+                    </p>
+                    <p>If you have any trouble or need to make changes, please contact Christine. I’m happy to help!</p>
+                    <p><strong>Please note:</strong> A new section called Fundraisers has been added to this page. This
+                        is where you’ll find links to our current fundraisers and quick words to share them.</p>
+                </div>
+            </div>
+        </section>
 
-<script>
-// Dark Mode Toggle
-const darkModeBtn = document.getElementById("darkModeToggle");
-darkModeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-  darkModeBtn.textContent = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
-});
+        <section id="volunteerSection">
+            <h2>Volunteer Schedule</h2>
+            <input type="text" id="searchInput" placeholder="Search for shifts, locations, or names...">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr id="tableHeader"></tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </section>
 
-// Smooth Scroll
-function scrollToSection(id){
-  document.getElementById(id).scrollIntoView({behavior:"smooth"});
-}
+        <section id="calendarSection">
+            <h2>Calendar View</h2>
+            <iframe
+                src="https://calendar.google.com/calendar/embed?src=6d8c4ff38f75611efb175c6cb8a575bce4d3521b797303078b8b04de29294f38%40group.calendar.google.com&ctz=America%2FEdmonton"
+                style="border:0; border-radius:14px;" width="100%" height="600"></iframe>
+        </section>
 
-// Volunteer Table Logic
-const volunteerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + Date.now();
+        <section id="fundraisersSection">
+            <h2>Fundraisers</h2>
+            <p style="margin-bottom: 25px;">Here you will find links to our current fundraisers and the links to copy
+                and paste to share them.</p>
 
-Papa.parse(volunteerCsvUrl, {
-  download:true,
-  header:true,
-  complete:function(results){
-    const data = results.data;
-    const body = document.getElementById("tableBody");
-    const head = document.getElementById("tableHeader");
-    body.innerHTML=""; head.innerHTML="";
-    let signupCol=null;
+            <div class="fundraiser-item">
+                <h3>True Earth</h3>
+                <p>True Earth offers eco-friendly laundry strips and household cleaning products that help reduce
+                    plastic waste.</p>
+                <p>When you make a purchase through our link, Airdrie 1st receives 20% of the sale, at no extra cost to
+                    buyer.</p>
+                <a href="https://ca.tru.earth/collections/fundraising?irclickid=z3z2GpQNnxycTvv2tD28yVrmUkpSvbQZTR8AyU0&irgwc=1&afsrc=1&utm_source=6872328&mp_value1=Airdrie%201st%20Club&timestamp=1769187020709&utm_campaign=impact&im_rewards=1"
+                    target="_blank">Tru Earth Link</a>
+            </div>
 
-    if(data.length > 0) {
-      Object.keys(data[0]).forEach(k=>{
-        if(k.toLowerCase()==="sign up") signupCol=k;
-        const th=document.createElement("th");
-        th.textContent=k;
-        head.appendChild(th);
-      });
+            <div class="fundraiser-item">
+                <h3>Great White Car Wash</h3>
+                <p>When you sell a $25 gift card Airdrie 1st makes 20% of that sale. To place an order email Tanya at <a
+                        href="mailto:partnerships@airdrie1st.com"
+                        style="display: inline; background: none; padding: 0; color: #0056b3; text-decoration: underline; font-weight: bold;">partnerships@airdrie1st.com</a>
+                </p>
+                <a href="https://greatwhitewash.com/locations/sierra-springs-sw-airdrie/" target="_blank">Great White
+                    Car Wash Link</a>
+            </div>
+        </section>
+    </main>
 
-      data.forEach(row=>{
-        if(!row[Object.keys(row)[0]]) return; 
-        const tr = document.createElement("tr");
-        Object.keys(row).forEach(k=>{
-          const td = document.createElement("td");
+    <footer>
+        <p>© 2026 Airdrie 1st Volunteer Hub</p>
+        <p>Need help? Contact: <a href="mailto:Volunteer@Airdrie1st.com">Volunteer@Airdrie1st.com</a></p>
+    </footer>
 
-          
-if(k === signupCol && row[k]){
-            // 1. Sign Up link
-            const a = document.createElement("a");
-            a.href = row[k]; 
-            a.textContent = "Sign Up"; 
-            a.target = "_blank";
-            a.style.color = "var(--brand-purple)"; 
-            a.style.fontWeight = "bold";
-            td.appendChild(a);
-
-            // 2. Pull values from your DATE and SHIFTS columns
-            const shiftName = encodeURIComponent(row["Shifts"] || "Volunteer Shift");
-            const shiftDate = row["Date"] || "";
-            const details = encodeURIComponent(`Date: ${shiftDate}\nShift: ${row["Shifts"] || ""}`);
-
-            // 3. Calendar link
-            const cal = document.createElement("a");
-            cal.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${shiftName}&details=${details}`;
-            cal.textContent = " | 📅 Add to Cal";
-            cal.target = "_blank";
-            cal.style.color = "var(--brand-purple)";
-            td.appendChild(cal);
-          } else {
-          
-          
-          else {
-            td.textContent = row[k] || "";
-          }
-          tr.appendChild(td);
+    <script>
+        // Dark Mode Toggle
+        const darkModeBtn = document.getElementById("darkModeToggle");
+        darkModeBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            darkModeBtn.textContent = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
         });
-        body.appendChild(tr);
-      });
-    }
-  }
-});
 
-// Search functionality
-document.getElementById("searchInput").addEventListener("keyup", function() {
-  const filter = this.value.toLowerCase();
-  const rows = document.querySelectorAll("#tableBody tr");
-  rows.forEach(row => {
-    row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
-  });
-});
+        // Smooth Scroll
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+        }
 
-// Notifications from Sheet
-const notifUrl='https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv';
-Papa.parse(notifUrl,{
-  download:true,
-  header:true,
-  complete:function(res){
-    const c=document.getElementById("notificationsContent");
-    res.data.forEach(r=>{
-      if(r.Message) {
-        const p=document.createElement("p");
-        p.style.cssText = "background: white; padding: 12px; border-radius: 8px; margin-bottom: 8px; color: #202040; border-left: 4px solid #FFCA00; font-size: 0.95rem;";
-        p.textContent=r.Message;
-        c.appendChild(p);
-      }
-    });
-  }
-});
+        // Volunteer Table Logic
+        const volunteerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRc8yold1M7kWaQDzmCu5TFndjcPiWMb5kCKR0fCRTu5uknjWE-7ctw_CcpQHcMHrDnjHAuDH4qJwHz/pub?gid=121942850&single=true&output=csv&cachebuster=' + Date.now();
 
-// Read Aloud Functionality
-const readBtn=document.getElementById("readAloudBtn");
-readBtn.addEventListener("click",()=>{
-  const synth=window.speechSynthesis;
-  if(synth.speaking){
-    synth.cancel();
-    readBtn.textContent = "🔊 Read Aloud";
-    return;
-  }
-  const notifs = document.getElementById("notificationsContent").innerText;
-  const howTo = document.querySelector(".info-card:nth-child(2)").innerText;
-  const combinedText = "Notifications: " + notifs + " . How to use: " + howTo;
-  
-  const utterance = new SpeechSynthesisUtterance(combinedText);
-  utterance.lang = "en-CA";
-  utterance.onend = () => { readBtn.textContent = "🔊 Read Aloud"; };
-  
-  readBtn.textContent = "🛑 Stop Reading";
-  synth.speak(utterance);
-});
-</script>
+        Papa.parse(volunteerCsvUrl, {
+            download: true,
+            header: true,
+            complete: function (results) {
+                const data = results.data;
+                const body = document.getElementById("tableBody");
+                const head = document.getElementById("tableHeader");
+                body.innerHTML = ""; head.innerHTML = "";
+                let signupCol = null;
+
+                if (data.length > 0) {
+                    Object.keys(data[0]).forEach(k => {
+                        if (k.toLowerCase() === "sign up") signupCol = k;
+                        const th = document.createElement("th");
+                        th.textContent = k;
+                        head.appendChild(th);
+                    });
+
+                    data.forEach(row => {
+                        if (!row[Object.keys(row)[0]]) return;
+                        const tr = document.createElement("tr");
+                        Object.keys(row).forEach(k => {
+                            const td = document.createElement("td");
+
+
+
+                            if (k === signupCol && row[k]) {
+                                const a = document.createElement("a");
+                                a.href = row[k]; a.textContent = "Sign Up"; a.target = "_blank";
+                                a.style.color = "var(--brand-purple)"; a.style.fontWeight = "bold";
+                                td.appendChild(a);
+
+                            } else {
+                                td.textContent = row[k] || "";
+                            }
+                            tr.appendChild(td);
+                        });
+                        body.appendChild(tr);
+                    });
+                }
+            }
+        });
+
+        // Search functionality
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#tableBody tr");
+            rows.forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(filter) ? "" : "none";
+            });
+        });
+
+        // Notifications from Sheet
+        const notifUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSR-cOYV978Imr0x1RK2w4CyDyfA4IlQP_cA5Oikg9heddQSDThbRrO-nH1HxY24grCQppKZqf4XCGG/pub?output=csv';
+        Papa.parse(notifUrl, {
+            download: true,
+            header: true,
+            complete: function (res) {
+                const c = document.getElementById("notificationsContent");
+                res.data.forEach(r => {
+                    if (r.Message) {
+                        const p = document.createElement("p");
+                        p.style.cssText = "background: white; padding: 12px; border-radius: 8px; margin-bottom: 8px; color: #202040; border-left: 4px solid #FFCA00; font-size: 0.95rem;";
+                        p.textContent = r.Message;
+                        c.appendChild(p);
+                    }
+                });
+            }
+        });
+
+        // Read Aloud Functionality
+        const readBtn = document.getElementById("readAloudBtn");
+        readBtn.addEventListener("click", () => {
+            const synth = window.speechSynthesis;
+            if (synth.speaking) {
+                synth.cancel();
+                readBtn.textContent = "🔊 Read Aloud";
+                return;
+            }
+            const notifs = document.getElementById("notificationsContent").innerText;
+            const howTo = document.querySelector(".info-card:nth-child(2)").innerText;
+            const combinedText = "Notifications: " + notifs + " . How to use: " + howTo;
+
+            const utterance = new SpeechSynthesisUtterance(combinedText);
+            utterance.lang = "en-CA";
+            utterance.onend = () => { readBtn.textContent = "🔊 Read Aloud"; };
+
+            readBtn.textContent = "🛑 Stop Reading";
+            synth.speak(utterance);
+        });
+    </script>
 
 </body>
+
 </html>
